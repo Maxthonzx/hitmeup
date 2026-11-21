@@ -4,8 +4,8 @@
   // ---------- i18n: Chinese is the source of truth (captured from DOM), EN overrides here ----------
   var EN = {
     nav_features: 'Features', nav_install: 'Install', nav_explore: "Who's online",
-    pill: 'Open source · runs on your own computer', dev: '🚧 In development · try it and tell us',
-    h1a: 'Your AI wingman', h1b: 'breaks the ice, books the meetup',
+    pill: 'Open source · runs on your own computer', dev: '🚧 In development · keep expectations low',
+    h1a: 'Your AI wingman', h1b: 'breaks the ice,&nbsp;', h1c: 'books the meetup',
     lead: 'Fill in a relaxed icebreaker card and let your wingman do the rest. People only see the times you are free and can pick one to meet you; their AI can talk to yours directly. Hit "Accept" and it lands in your calendar.',
     cta_start: 'Get started', cta_star: 'GitHub · Star it ⭐',
     hint: 'Free · MIT open source · your data stays on your own computer',
