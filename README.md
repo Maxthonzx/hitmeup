@@ -1,10 +1,12 @@
-# 搭子 Dazi
+# 约我 Hit Me Up
 
-**你的 AI 搭子：替你破冰，帮你约见面。** · *Your AI wingman that breaks the ice and books the meetup.*
+> 🚧 **开发中（v0.1 预览版）**：功能和接口可能变动，欢迎试用并在 Issues 里反馈。· *Work in progress — expect changes.*
+
+**你的 AI 分身：替你破冰，帮你约见面。** · *Your AI wingman that breaks the ice and books the meetup.*
 
 开源、本地运行的个人 Agent。你的电脑开着、联网时，别人（或他们的 AI）可以通过一个公开链接了解你、打招呼、约你见面；**对方永远看不到你的日历，只看到你愿意给的空闲时间**，你确认后才成交，成交后事件写入你的日历。
 
-- 目录与主页：https://dazi-agent.pages.dev　·　仓库：https://github.com/Maxthonzx/dazi
+- 目录与主页：https://hitmeup-agent.pages.dev　·　仓库：https://github.com/Maxthonzx/hitmeup
 - 截图：`docs/screenshots/`（占位，待补）
 
 ## 快速开始
@@ -12,11 +14,11 @@
 ### 方式一：让 AI 帮你装（推荐）
 把下面这段话粘贴给 Claude Code / Codex / Cursor：
 
-> 请 clone https://github.com/Maxthonzx/dazi ，然后阅读并严格按照仓库里的 AGENTS.md，一步步帮我安装并启动搭子 Dazi。
+> 请 clone https://github.com/Maxthonzx/hitmeup ，然后阅读并严格按照仓库里的 AGENTS.md，一步步帮我安装并启动约我 Hit Me Up。
 
 ### 方式二：手动
 ```bash
-git clone https://github.com/Maxthonzx/dazi && cd dazi
+git clone https://github.com/Maxthonzx/hitmeup && cd hitmeup
 npm install            # 需要 Node >= 20
 npm run setup          # 问答式向导：资料、时区、日历、通知
 brew install cloudflared            # macOS；Windows: winget install Cloudflare.cloudflared
@@ -30,7 +32,7 @@ npm start              # 打印分享链接 + 后台地址 http://127.0.0.1:7790
 ```
 访客浏览器 / 访客的 AI ──HTTPS──> Cloudflare 快速隧道 ──> 你的电脑 127.0.0.1:7788（公开：资料卡 + REST + A2A）
                                                       127.0.0.1:7790（后台：仅你本人，永不暴露）
-                    目录站 dazi-agent.pages.dev：只存 handle -> 当前隧道地址 + 展示卡片（12 小时内最多登记一次）
+                    目录站 hitmeup-agent.pages.dev：只存 handle -> 当前隧道地址 + 展示卡片（12 小时内最多登记一次）
 请求 ──> 你在后台 接受 / 换个时间 / 婉拒 ──> 写入日历（或给你一键添加链接）──> 对方拿到时间、地点、你同意分享的联系方式
 ```
 
@@ -60,7 +62,7 @@ npm start              # 打印分享链接 + 后台地址 http://127.0.0.1:7790
 `npm test`（单元测试）· `npm run e2e`（两实例端到端，`--no-tunnel`，不访问真实目录）。
 
 ## English
-**Dazi** is an open-source personal agent that runs on your own computer. While it is on and online, a public profile card plus an A2A (v0.3) endpoint is reachable through a Cloudflare quick tunnel. Visitors — humans or their AI agents — can learn about you, say hi, and request a meetup, but never see your calendar, only the free slots you offer. You approve; the event goes into your calendar; the requester receives time, place and the contacts you chose to share. Quick start: `npm install && npm run setup && npm start`, or paste the prompt above into your AI coding agent. Node >= 20; macOS and Windows supported. Calendars: Google (secret iCal URL, read + add-link), iCloud (CalDAV, read/write), Outlook (ICS), Feishu (optional). MIT licensed.
+**Hit Me Up** is an open-source personal agent that runs on your own computer. While it is on and online, a public profile card plus an A2A (v0.3) endpoint is reachable through a Cloudflare quick tunnel. Visitors — humans or their AI agents — can learn about you, say hi, and request a meetup, but never see your calendar, only the free slots you offer. You approve; the event goes into your calendar; the requester receives time, place and the contacts you chose to share. Quick start: `npm install && npm run setup && npm start`, or paste the prompt above into your AI coding agent. Node >= 20; macOS and Windows supported. Calendars: Google (secret iCal URL, read + add-link), iCloud (CalDAV, read/write), Outlook (ICS), Feishu (optional). MIT licensed.
 
 ## License
 MIT © 2026 Maxthonzx

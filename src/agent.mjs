@@ -1,4 +1,4 @@
-// Dazi 核心：状态、可约时间、请求生命周期（入站/出站）。服务器层只做 HTTP 适配。
+// Hit Me Up 核心：状态、可约时间、请求生命周期（入站/出站）。服务器层只做 HTTP 适配。
 import { createCalendar } from './calendar/index.mjs';
 import { googleAddLink, buildICS } from './calendar/links.mjs';
 import {
@@ -10,22 +10,22 @@ import { toISO, fmtSlot, parseTime, DAY } from './tz.mjs';
 import { notify } from './notify.mjs';
 import { fetchAgentCard, makeMessage, getData, rpcCall, taskArtifactData } from './a2a.mjs';
 import { resolveHandle } from './directory.mjs';
-import { DaziError } from './errors.mjs';
-export { DaziError };
+import { HmuError } from './errors.mjs';
+export { HmuError };
 
 
 const MAX_PENDING = 50;
 const MAX_REQUESTS = 500;
 const MAX_INBOX = 300;
 
-export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev', log = console.log, nowFn = Date.now, calendarOverride = null, fetchImpl = fetch } = {}) {
+export function createAgent({ dataDir, directory = 'https://hitmeup-agent.pages.dev', log = console.log, nowFn = Date.now, calendarOverride = null, fetchImpl = fetch } = {}) {
   const paths = dataPaths(dataDir);
-  const runtime = { publicUrl: process.env.DAZI_PUBLIC_URL || null, online: false, lastCalendarError: null };
+  const runtime = { publicUrl: process.env.HITMEUP_PUBLIC_URL || null, online: false, lastCalendarError: null };
   let calCache = { key: '', cal: null };
 
   const config = () => loadConfig(dataDir);
   const profile = () => loadProfile(dataDir);
-  const requireProfile = () => { const p = profile(); if (!p) throw new DaziError('no_profile', '尚未创建资料，请先运行 npm run setup'); return p; };
+  const requireProfile = () => { const p = profile(); if (!p) throw new HmuError('no_profile', '尚未创建资料，请先运行 npm run setup'); return p; };
   const calendar = () => {
     if (calendarOverride) return calendarOverride;
     const c = config().calendar || { type: 'none' };
@@ -41,7 +41,7 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
   function updateRequest(id, patch) {
     const list = requests();
     const r = list.find((x) => x.id === id);
-    if (!r) throw new DaziError('not_found', '找不到该请求');
+    if (!r) throw new HmuError('not_found', '找不到该请求');
     Object.assign(r, patch, { updatedAt: new Date(nowFn()).toISOString() });
     saveRequests(list);
     return r;
@@ -76,14 +76,14 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
   // ---------- 入站请求 ----------
   function checkPendingCap() {
     if (requests().filter((r) => r.direction === 'in' && r.status === 'pending').length >= MAX_PENDING) {
-      throw new DaziError('too_many_pending', 'TA 现在收到的请求太多了，请稍后再试');
+      throw new HmuError('too_many_pending', 'TA 现在收到的请求太多了，请稍后再试');
     }
   }
 
   function addHi({ name, intro, contact, message, source = 'web', agentUrl }) {
     const n = clean(name, 40), m = clean(message, 500);
-    if (!n) throw new DaziError('invalid', '请告诉 TA 你的称呼');
-    if (!m && !clean(intro, 200)) throw new DaziError('invalid', '请写一句话再发送');
+    if (!n) throw new HmuError('invalid', '请告诉 TA 你的称呼');
+    if (!m && !clean(intro, 200)) throw new HmuError('invalid', '请写一句话再发送');
     const list = inbox();
     const item = { id: rid(8), at: new Date(nowFn()).toISOString(), name: n, intro: clean(intro, 200), contact: clean(contact, 100), message: m, source, agentUrl: clean(agentUrl, 200) };
     list.push(item);
@@ -100,8 +100,8 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
       name: clean(from?.name, 40), intro: clean(from?.intro, 300), contact: clean(from?.contact, 100),
       handle: clean(from?.handle, 30), agentUrl: clean(from?.agentUrl, 200),
     };
-    if (!f.name) throw new DaziError('invalid', '请填写你的称呼');
-    if (!f.contact && !f.agentUrl) throw new DaziError('invalid', '请留下联系方式，对方同意后才能联系你');
+    if (!f.name) throw new HmuError('invalid', '请填写你的称呼');
+    if (!f.contact && !f.agentUrl) throw new HmuError('invalid', '请留下联系方式，对方同意后才能联系你');
     const durationMin = Math.min(Math.max(Number(meeting?.durationMin) || config().availability.defaultDurationMin || 60, 15), 480);
     const m = {
       title: clean(meeting?.title, 60) || '见个面', durationMin, meetupType: clean(meeting?.meetupType, 20),
@@ -112,7 +112,7 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
     const ok = intersectSlots(proposed, cands);
     if (!ok.length) {
       const hint = await freeSlots(durationMin, 8);
-      throw new DaziError('no_overlap', proposed.length ? '你选的时间已经不可约了，换一个吧' : '请选择至少一个时间', { freeSlots: hint });
+      throw new HmuError('no_overlap', proposed.length ? '你选的时间已经不可约了，换一个吧' : '请选择至少一个时间', { freeSlots: hint });
     }
     const req = {
       id: rid(12), token: rid(12), direction: 'in', status: 'pending', source,
@@ -132,7 +132,7 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
     return {
       start: slot.start, end: slot.end,
       summary: `${req.meeting.title || '见面'}｜${who} × ${p.nickname}`,
-      description: [`搭子 Dazi 约的见面`, req.meeting.meetupType && `类型：${req.meeting.meetupType}`, contact && `对方联系方式：${contact}`, req.meeting.note && `备注：${req.meeting.note}`].filter(Boolean).join('\n'),
+      description: [`约我 Hit Me Up 约的见面`, req.meeting.meetupType && `类型：${req.meeting.meetupType}`, contact && `对方联系方式：${contact}`, req.meeting.note && `备注：${req.meeting.note}`].filter(Boolean).join('\n'),
       location: place,
     };
   }
@@ -154,11 +154,11 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
 
   async function approve(id, { slotIndex = 0, place } = {}) {
     const req = getRequest(id);
-    if (!req || req.direction !== 'in') throw new DaziError('not_found', '找不到该请求');
-    if (req.status !== 'pending') throw new DaziError('bad_state', `该请求已是「${req.status}」状态`);
+    if (!req || req.direction !== 'in') throw new HmuError('not_found', '找不到该请求');
+    if (req.status !== 'pending') throw new HmuError('bad_state', `该请求已是「${req.status}」状态`);
     const slot = req.slots[slotIndex] || req.slots[0];
     const cands = await candidateSlots(req.meeting.durationMin);
-    if (!intersectSlots([slot], cands).length) throw new DaziError('slot_taken', '这个时间已经不空了，请用「换个时间」', { freeSlots: await freeSlots(req.meeting.durationMin, 8) });
+    if (!intersectSlots([slot], cands).length) throw new HmuError('slot_taken', '这个时间已经不空了，请用「换个时间」', { freeSlots: await freeSlots(req.meeting.durationMin, 8) });
     const p = requireProfile();
     const withPlace = { ...req, result: { place: placeFor(req, place) } };
     const cal = await writeCalendar(withPlace, slot);
@@ -171,10 +171,10 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
 
   async function counter(id, slot, { place } = {}) {
     const req = getRequest(id);
-    if (!req || req.direction !== 'in') throw new DaziError('not_found', '找不到该请求');
-    if (req.status !== 'pending') throw new DaziError('bad_state', `该请求已是「${req.status}」状态`);
+    if (!req || req.direction !== 'in') throw new HmuError('not_found', '找不到该请求');
+    if (req.status !== 'pending') throw new HmuError('bad_state', `该请求已是「${req.status}」状态`);
     const cands = await candidateSlots(req.meeting.durationMin);
-    if (!intersectSlots([slot], cands).length) throw new DaziError('slot_taken', '这个时间不可约', { freeSlots: await freeSlots(req.meeting.durationMin, 8) });
+    if (!intersectSlots([slot], cands).length) throw new HmuError('slot_taken', '这个时间不可约', { freeSlots: await freeSlots(req.meeting.durationMin, 8) });
     const r = updateRequest(id, { status: 'counter', counterSlot: stripSlot(slot), counterPlace: clean(place, 80) });
     notifyOwner('已发出新的时间建议', `${req.from.name}：${label(slot)}，等对方确认`);
     return r;
@@ -182,18 +182,18 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
 
   async function decline(id) {
     const req = getRequest(id);
-    if (!req || req.direction !== 'in') throw new DaziError('not_found', '找不到该请求');
-    if (!['pending', 'counter'].includes(req.status)) throw new DaziError('bad_state', `该请求已是「${req.status}」状态`);
+    if (!req || req.direction !== 'in') throw new HmuError('not_found', '找不到该请求');
+    if (!['pending', 'counter'].includes(req.status)) throw new HmuError('bad_state', `该请求已是「${req.status}」状态`);
     return updateRequest(id, { status: 'declined' });
   }
 
   /** 请求方确认 counter（凭 token） */
   async function confirmCounter(id, token) {
     const req = getRequest(id);
-    if (!req || req.direction !== 'in' || req.token !== token) throw new DaziError('not_found', '找不到该请求');
-    if (req.status !== 'counter') throw new DaziError('bad_state', '当前没有待确认的新时间');
+    if (!req || req.direction !== 'in' || req.token !== token) throw new HmuError('not_found', '找不到该请求');
+    if (req.status !== 'counter') throw new HmuError('bad_state', '当前没有待确认的新时间');
     const cands = await candidateSlots(req.meeting.durationMin);
-    if (!intersectSlots([req.counterSlot], cands).length) { updateRequest(id, { status: 'declined' }); throw new DaziError('slot_taken', '这个时间已经被占用了'); }
+    if (!intersectSlots([req.counterSlot], cands).length) { updateRequest(id, { status: 'declined' }); throw new HmuError('slot_taken', '这个时间已经被占用了'); }
     const p = requireProfile();
     const withPlace = { ...req, result: { place: placeFor(req, req.counterPlace) } };
     const cal = await writeCalendar(withPlace, req.counterSlot);
@@ -229,7 +229,7 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
   // ---------- 出站 ----------
   async function resolveTarget(target) {
     const t = clean(target, 300);
-    if (!t) throw new DaziError('invalid', '请填写对方的 handle 或链接');
+    if (!t) throw new HmuError('invalid', '请填写对方的 handle 或链接');
     let handle = null, base = null;
     if (/^https?:\/\//i.test(t)) {
       const u = new URL(t);
@@ -238,8 +238,8 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
     } else handle = t.replace(/^@/, '').toLowerCase();
     if (handle) {
       const r = await resolveHandle(directory, handle, { fetchImpl });
-      if (!r.ok || !r.url) throw new DaziError('not_found', `目录里找不到 ${handle}`);
-      if (r.online === false) throw new DaziError('offline', `${handle} 现在不在线（对方电脑没开或没联网）`);
+      if (!r.ok || !r.url) throw new HmuError('not_found', `目录里找不到 ${handle}`);
+      if (r.online === false) throw new HmuError('offline', `${handle} 现在不在线（对方电脑没开或没联网）`);
       base = r.url.replace(/\/$/, '');
     }
     const card = await fetchAgentCard(`${base}/.well-known/agent-card.json`, fetchImpl);
@@ -265,7 +265,7 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
     const pr = await rpcCall(a2aUrl, 'message/send', { message: makeMessage({ role: 'user', data: { type: 'get-profile' } }) }, fetchImpl);
     const peerProfile = taskArtifactData(pr)?.profile || null;
     const cands = await candidateSlots(dur);
-    if (!cands.length) throw new DaziError('no_slots', '你自己近期没有可约时间，先检查可约时间设置');
+    if (!cands.length) throw new HmuError('no_slots', '你自己近期没有可约时间，先检查可约时间设置');
     const meeting = { title: clean(title, 60) || '见个面', durationMin: dur, meetupType: clean(meetupType, 20), place: clean(place, 80), note: clean(note, 500) };
     let sent = pickBest(cands, 10);
     let task = await sendMeetup(a2aUrl, { meeting, slots: sent });
@@ -304,7 +304,7 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
     }
     if (state === 'input-required' && art?.counterSlot && req.status !== 'counter') {
       const r = updateRequest(req.id, { status: 'counter', counterSlot: stripSlot(art.counterSlot), counterPlace: art.counterPlace || '' });
-      await notifyOwner('对方建议换个时间', `${r.peer.name}：${label(art.counterSlot)}（请在 Dazi 后台确认）`);
+      await notifyOwner('对方建议换个时间', `${r.peer.name}：${label(art.counterSlot)}（请在 Hit Me Up 后台确认）`);
       return r;
     }
     return req;
@@ -330,7 +330,7 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
 
   async function confirmOutboundCounter(id) {
     const req = getRequest(id);
-    if (!req || req.direction !== 'out' || req.status !== 'counter') throw new DaziError('bad_state', '没有待确认的新时间');
+    if (!req || req.direction !== 'out' || req.status !== 'counter') throw new HmuError('bad_state', '没有待确认的新时间');
     const task = await rpcCall(req.peer.a2aUrl, 'message/send', {
       message: makeMessage({ role: 'user', taskId: req.peer.taskId, data: { type: 'confirm-counter', taskId: req.peer.taskId } }),
     }, fetchImpl);
@@ -341,7 +341,7 @@ export function createAgent({ dataDir, directory = 'https://dazi-agent.pages.dev
   function saveProfileFrom(raw) {
     const p = normalizeProfile(raw);
     const errs = validateProfile(p);
-    if (errs.length) throw new DaziError('invalid', errs.join('；'));
+    if (errs.length) throw new HmuError('invalid', errs.join('；'));
     saveProfile(dataDir, p);
     return p;
   }

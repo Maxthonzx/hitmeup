@@ -1,7 +1,7 @@
 // 主人后台页面（本机 127.0.0.1 专用）。静态 HTML + 原生 JS，全部用 textContent 构建 DOM。
 export function renderAdmin() {
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>搭子 Dazi · 后台</title><style>
+<title>约我 Hit Me Up · 后台</title><style>
 :root{--pri:#ff5d73;--ink:#2b2230;--mute:#7b6f80;--line:#eee3e0}
 *{box-sizing:border-box}body{margin:0;background:#fff7f2;color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
 .w{max-width:860px;margin:0 auto;padding:16px}h1{font-size:22px;margin:4px 0}h3{margin:0 0 8px}
@@ -16,13 +16,13 @@ label{display:block;font-size:13px;color:var(--mute);margin:10px 0 3px}
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:600px){.g2{grid-template-columns:1fr}}
 .slot{display:inline-block;border:1px solid var(--line);border-radius:10px;padding:5px 10px;margin:3px;cursor:pointer}.slot.on{border-color:var(--pri);background:#fff0ee}
 pre{white-space:pre-wrap;background:#faf5f3;padding:8px;border-radius:8px;font-size:12px}
-</style></head><body><div class="w"><h1>🤝 搭子 Dazi 后台 <span class="m">仅本机可见</span></h1>
+</style></head><body><div class="w"><h1>🤝 约我 Hit Me Up 后台 <span class="m">仅本机可见</span></h1>
 <div class="card" id="top">加载中…</div><div class="tabs" id="tabs"></div><div id="view"></div></div>
 <script>
 const $=s=>document.querySelector(s);
 function h(tag,attrs,...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs||{})){if(k==='class')e.className=v;else if(k.startsWith('on'))e[k]=v;else if(v!==undefined&&v!==null&&v!==false)e.setAttribute(k,v===true?'':v);}
  for(const c of kids.flat()){if(c===null||c===undefined||c===false)continue;e.append(c.nodeType?c:document.createTextNode(String(c)));}return e;}
-async function api(path,method,body){const r=await fetch(path,{method:method||'GET',headers:{'content-type':'application/json','x-dazi-admin':'1'},body:body?JSON.stringify(body):undefined});return r.json();}
+async function api(path,method,body){const r=await fetch(path,{method:method||'GET',headers:{'content-type':'application/json','x-hitmeup-admin':'1'},body:body?JSON.stringify(body):undefined});return r.json();}
 let S=null,tab='req',flash='';
 const TABS=[['req','📬 请求'],['out','🚀 主动约'],['hi','👋 招呼'],['up','📅 日程'],['prof','🧑 资料'],['set','⚙️ 设置']];
 const STATUS={pending:'待处理',accepted:'已接受',declined:'已婉拒',counter:'等对方确认',failed:'已失效'};

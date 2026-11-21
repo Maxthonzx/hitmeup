@@ -30,7 +30,7 @@ try {
     const r = await fetch(base + p); ok(`GET ${p} 200`, r.status === 200, r.status);
   }
   const home = await (await fetch(base + '/')).text();
-  ok('index has install prompt + github link', home.includes('git clone https://github.com/Maxthonzx/dazi') && home.includes('id="prompt"'));
+  ok('index has install prompt + github link', home.includes('git clone https://github.com/Maxthonzx/hitmeup') && home.includes('id="prompt"'));
 
   // register
   let r = await post('/api/register', { handle, url, secret, listed: true, card: { nickname: 'Smoke', city: '深圳', tagline: 'hi', avatar: '🦊', tags: ['咖啡', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i'] } });
@@ -86,7 +86,7 @@ try {
 
   // unknown
   r = await fetch(base + '/u/nobody-' + run, { redirect: 'manual' }); t = await r.text();
-  ok('/u unknown -> 404 page with CTA', r.status === 404 && t.includes('想要自己的搭子'), r.status);
+  ok('/u unknown -> 404 page with CTA', r.status === 404 && t.includes('想要自己的 AI 分身'), r.status);
 
   // unregister
   r = await post('/api/unregister', { handle, secret: secret2 });

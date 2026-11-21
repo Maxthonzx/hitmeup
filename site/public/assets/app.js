@@ -4,7 +4,7 @@
   // ---------- i18n: Chinese is the source of truth (captured from DOM), EN overrides here ----------
   var EN = {
     nav_features: 'Features', nav_install: 'Install', nav_explore: "Who's online",
-    pill: 'Open source · runs on your own computer',
+    pill: 'Open source · runs on your own computer', dev: '🚧 In development · try it and tell us',
     h1a: 'Your AI wingman', h1b: 'breaks the ice, books the meetup',
     lead: 'Fill in a relaxed icebreaker card and let your wingman do the rest. People only see the times you are free and can pick one to meet you; their AI can talk to yours directly. Hit "Accept" and it lands in your calendar.',
     cta_start: 'Get started', cta_star: 'GitHub · Star it ⭐',
@@ -16,7 +16,7 @@
     s_title: '3 steps to start', s_sub: 'No tech skills needed — just hand a paragraph to your AI.',
     s1h: 'Copy the prompt', s1p: 'Copy the install prompt below in one click.',
     s2h: 'Send it to your AI', s2p: 'Paste it into Claude Code / Codex / Cursor or any AI that can run commands. It installs everything, asks a few questions and fills your card.',
-    s3h: 'Share your link', s3p: 'Get <code class="i">dazi-agent.pages.dev/u/your-name</code> and send it to people you want to meet.',
+    s3h: 'Share your link', s3p: 'Get <code class="i">hitmeup-agent.pages.dev/u/your-name</code> and send it to people you want to meet.',
     p_title: 'Copy this to your AI', p_sub: 'One click to copy, then paste it to any AI agent that can run commands. It will install it for you.',
     p_bar: 'Install prompt (Chinese; your AI will reply in your language)', copy: 'Copy prompt', copied: 'Copied ✓', copy_fail: 'Press Ctrl/Cmd+C',
     tab_other: 'Other AI',
@@ -28,40 +28,40 @@
     cmd_h: 'Handy commands', cmd1: 'check your setup', cmd2: 'have your wingman invite someone', cmd3: 'go offline and remove your public link',
     adm_h: 'Admin dashboard', adm_p: 'Only reachable on your own computer. Edit your card and handle meetup requests.',
     c_title: 'Connect your calendar', c_sub: 'Optional. Once connected, your wingman knows when you are free and can write meetups in.',
-    c_g_tag: 'read + one-click add', c_a_tag: 'read + write', c_o_tag: 'ICS read-only',
+    c_g_tag: 'read + one-click add', c_a_tag: 'read + write', c_o_tag: 'ICS read-only', c_f_tag: 'optional',
     c_g: '<li>Open Google Calendar on the web and click "Settings" (top right).</li><li>Pick the calendar on the left → "Integrate calendar".</li><li>Copy the "<b>Secret address in iCal format</b>" and give it to your wingman (paste it into <code class="i">npm run setup</code>).</li><li>When a meetup is accepted you get a one-click "Add to Google Calendar" link.</li>',
-    c_a: '<li>Open <code class="i">appleid.apple.com</code> and sign in.</li><li>Go to "Sign-In and Security" → "App-Specific Passwords".</li><li>Generate a new one (name it Dazi) and hand it over when prompted. <b>Never use your Apple ID password.</b></li>',
+    c_a: '<li>Open <code class="i">appleid.apple.com</code> and sign in.</li><li>Go to "Sign-In and Security" → "App-Specific Passwords".</li><li>Generate a new one (name it Hit Me Up) and hand it over when prompted. <b>Never use your Apple ID password.</b></li>',
     c_o: '<li>Outlook on the web: Settings → Calendar → Shared calendars → Publish a calendar.</li><li>Choose "Can view all details" and copy the ICS link for your wingman.</li>',
-    c_f: 'Feishu / Lark (optional, for work)', c_f_p: 'If you use Feishu calendar at work, your wingman can connect to it too. Follow the setup prompts — skipping it changes nothing else.',
+    c_f: 'Feishu / Lark (for work)', c_f_p: 'If you use Feishu calendar at work, your wingman can connect to it too. Follow the setup prompts — skipping it changes nothing else.',
     pr_title: 'Privacy: your data, your call', pr_sub: 'Your wingman runs on your own computer. It is not an account on someone else\'s platform.',
     pr1h: 'Data stays local', pr1p: 'Your card and meetup records live in the data/ folder on your computer and are never uploaded.',
     pr2h: 'Schedule never leaves', pr2p: 'People only see "which times are free", never what is on your calendar.',
     pr3h: 'Contact shared later', pr3p: 'WeChat / phone / email is sent only after you click "Accept".',
     pr4h: 'Off = offline', pr4p: 'Shut down your computer and your wingman goes offline; visitors see "not online right now". The directory only stores your current tunnel address (plus the card summary you chose to list), never your schedule.',
-    pr_how: 'How it works: while your computer is on and online, Dazi serves your card through a Cloudflare quick tunnel (cloudflared). This site\'s directory points the stable link <code class="i">https://dazi-agent.pages.dev/u/&lt;handle&gt;</code> at your current tunnel address.',
+    pr_how: 'How it works: while your computer is on and online, Hit Me Up serves your card through a Cloudflare quick tunnel (cloudflared). This site\'s directory points the stable link <code class="i">https://hitmeup-agent.pages.dev/u/&lt;handle&gt;</code> at your current tunnel address.',
     q_title: 'FAQ',
     q1: 'What if my computer is off?', q1a: 'Your wingman goes offline and visitors see "their wingman is not online right now". It comes back when you turn the computer on and run npm start.',
     q2: 'Can others see my schedule?', q2a: 'No. They only see the free time slots, never the details. Your calendar data never leaves your computer.',
-    q3: 'Does it cost anything?', q3a: 'No. Dazi is MIT-licensed open source and the directory service is free (it runs on Cloudflare\'s free tier).',
+    q3: 'Does it cost anything?', q3a: 'No. Hit Me Up is MIT-licensed open source and the directory service is free (it runs on Cloudflare\'s free tier).',
     q4: "Can someone without a wingman book me?", q4a: 'Yes. They just open your share link and pick one of your free slots on the web page. Nothing to install.',
     q5: 'Where is my data?', q5a: 'In the project folder on your computer (the data/ directory, ignored by .gitignore). This site only keeps one record, "your handle → current tunnel address", plus the card summary you chose to list.',
     q6: 'How do I take it down?', q6a: 'Run <code class="i">npm run unpublish</code>. Your public link and directory record are deleted.',
     // explore page
     ex_title: "Who's online", ex_sub: 'Cards from people who chose to be listed. Tap one to say hi.',
-    ex_loading: 'Loading…', ex_empty_h: 'Nobody is listed yet', ex_empty_p: 'Be the first! Install Dazi and turn on "list me in the directory".',
+    ex_loading: 'Loading…', ex_empty_h: 'Nobody is listed yet', ex_empty_p: 'Be the first! Install Hit Me Up and turn on "list me in the directory".',
     ex_err: 'Could not load the list. Try again later.', ex_online: 'online', ex_offline: 'offline', ex_cta: 'Get my own wingman'
   };
 
   var lang = 'zh';
-  try { lang = localStorage.getItem('dazi-lang') || (/^zh/i.test(navigator.language) ? 'zh' : 'en'); } catch (e) {}
+  try { lang = localStorage.getItem('hitmeup-lang') || (/^zh/i.test(navigator.language) ? 'zh' : 'en'); } catch (e) {}
 
   var nodes = [].slice.call(document.querySelectorAll('[data-i18n]'));
   nodes.forEach(function (n) { n._zh = n.innerHTML; });
   var zhTitle = document.title;
 
   function t(key) { return lang === 'en' && EN[key] != null ? EN[key] : (nodes.filter(function (n) { return n.dataset.i18n === key; })[0] || {})._zh; }
-  window.daziT = function (key) { return lang === 'en' && EN[key] != null ? EN[key] : null; };
-  window.daziLang = function () { return lang; };
+  window.hmuT = function (key) { return lang === 'en' && EN[key] != null ? EN[key] : null; };
+  window.hmuLang = function () { return lang; };
 
   function apply() {
     document.documentElement.lang = lang === 'en' ? 'en' : 'zh-CN';
@@ -71,15 +71,15 @@
     });
     var btn = document.getElementById('lang');
     if (btn) btn.textContent = lang === 'en' ? '中文' : 'EN';
-    if (lang === 'en') document.title = document.body.dataset.titleEn || '搭子 Dazi — Your AI wingman that breaks the ice and books the meetup';
+    if (lang === 'en') document.title = document.body.dataset.titleEn || '约我 Hit Me Up — Your AI wingman that breaks the ice and books the meetup';
     else document.title = zhTitle;
-    document.dispatchEvent(new CustomEvent('dazi:lang', { detail: lang }));
+    document.dispatchEvent(new CustomEvent('hitmeup:lang', { detail: lang }));
   }
 
   var langBtn = document.getElementById('lang');
   if (langBtn) langBtn.addEventListener('click', function () {
     lang = lang === 'en' ? 'zh' : 'en';
-    try { localStorage.setItem('dazi-lang', lang); } catch (e) {}
+    try { localStorage.setItem('hitmeup-lang', lang); } catch (e) {}
     apply();
   });
   if (lang === 'en') apply(); else if (langBtn) langBtn.textContent = 'EN';

@@ -51,7 +51,7 @@ export function createIcsCalendar({ url, cacheMs = 5 * 60 * 1000, fetchImpl = fe
   let cache = null;
   async function load() {
     if (cache && Date.now() - cache.at < cacheMs) return cache.text;
-    const res = await fetchImpl(normalizeIcsUrl(url), { signal: AbortSignal.timeout(20000), headers: { 'user-agent': 'Dazi/0.1' } });
+    const res = await fetchImpl(normalizeIcsUrl(url), { signal: AbortSignal.timeout(20000), headers: { 'user-agent': 'Hit Me Up/0.1' } });
     if (!res.ok) throw new Error(`ICS 下载失败: HTTP ${res.status}`);
     const text = await res.text();
     if (!text.includes('BEGIN:VCALENDAR')) throw new Error('该链接返回的不是 iCal 日历');

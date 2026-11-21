@@ -29,7 +29,7 @@
 `tasks/get`：待确认 `input-required`；主人建议改时间 → `input-required` + artifact `{counterSlot, counterPlace}`；接受 → `completed` + artifact `{slot, place, contacts}`；婉拒 → `rejected`。错误码：-32001 任务不存在，-32602 参数错误。
 
 ## 管理 API（127.0.0.1:7790，仅本机）
-写请求须带头 `x-dazi-admin: 1`，且 Host 必须是 127.0.0.1/localhost:端口。主要路径：`GET /api/state`、`POST /api/requests/<id>/{accept,counter,decline}`、`POST /api/outbound`、`POST /api/outbound/<id>/confirm`、`PUT /api/profile`、`PUT /api/config`、`POST /api/notify-test`、`GET /api/calendar-check`。
+写请求须带头 `x-hitmeup-admin: 1`，且 Host 必须是 127.0.0.1/localhost:端口。主要路径：`GET /api/state`、`POST /api/requests/<id>/{accept,counter,decline}`、`POST /api/outbound`、`POST /api/outbound/<id>/confirm`、`PUT /api/profile`、`PUT /api/config`、`POST /api/notify-test`、`GET /api/calendar-check`。
 
 ## 目录服务（由 site 提供）
-`POST /api/register {handle,url,secret,listed,card}`、`GET /api/resolve/<handle>`、`POST /api/unregister {handle,secret}`。Dazi 仅在启动、隧道地址变化、以及每 12 小时最多一次时登记。设 `DAZI_DIRECTORY=off` 可完全关闭。
+`POST /api/register {handle,url,secret,listed,card}`、`GET /api/resolve/<handle>`、`POST /api/unregister {handle,secret}`。Hit Me Up 仅在启动、隧道地址变化、以及每 12 小时最多一次时登记。设 `HITMEUP_DIRECTORY=off` 可完全关闭。

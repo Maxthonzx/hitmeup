@@ -23,11 +23,11 @@ export function parseArgs(argv) {
 export function runtimeOpts(flags = {}, env = process.env) {
   const pick = (f, e, d) => (flags[f] !== undefined && flags[f] !== true ? flags[f] : env[e] !== undefined ? env[e] : d);
   return {
-    dataDir: path.resolve(pick('data', 'DAZI_DATA_DIR', path.join(ROOT, 'data'))),
-    publicPort: Number(pick('public-port', 'DAZI_PUBLIC_PORT', 7788)),
-    adminPort: Number(pick('admin-port', 'DAZI_ADMIN_PORT', 7790)),
-    publicUrl: pick('public-url', 'DAZI_PUBLIC_URL', '') || null,
-    directory: pick('directory', 'DAZI_DIRECTORY', 'https://dazi-agent.pages.dev'),
-    noTunnel: flags['no-tunnel'] === true || flags['no-tunnel'] === 'true' || env.DAZI_NO_TUNNEL === '1',
+    dataDir: path.resolve(pick('data', 'HITMEUP_DATA_DIR', path.join(ROOT, 'data'))),
+    publicPort: Number(pick('public-port', 'HITMEUP_PUBLIC_PORT', 7788)),
+    adminPort: Number(pick('admin-port', 'HITMEUP_ADMIN_PORT', 7790)),
+    publicUrl: pick('public-url', 'HITMEUP_PUBLIC_URL', '') || null,
+    directory: pick('directory', 'HITMEUP_DIRECTORY', 'https://hitmeup-agent.pages.dev'),
+    noTunnel: flags['no-tunnel'] === true || flags['no-tunnel'] === 'true' || env.HITMEUP_NO_TUNNEL === '1',
   };
 }

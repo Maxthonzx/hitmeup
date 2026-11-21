@@ -1,6 +1,6 @@
 // A2A v0.3 最小实现：客户端工具 + 服务端 JSON-RPC 处理（message/send, tasks/get）。
 import { randomUUID } from 'node:crypto';
-import { DaziError } from './errors.mjs';
+import { HmuError } from './errors.mjs';
 import { publicProfile } from './data.mjs';
 
 export const PROTOCOL_VERSION = '0.3.0';
@@ -24,9 +24,9 @@ export function taskArtifactData(task) {
 
 export async function fetchAgentCard(url, fetchImpl = fetch) {
   const res = await fetchImpl(url, { signal: AbortSignal.timeout(15000) });
-  if (!res.ok) throw new DaziError('peer_error', `获取对方 AgentCard 失败: HTTP ${res.status}`);
+  if (!res.ok) throw new HmuError('peer_error', `获取对方 AgentCard 失败: HTTP ${res.status}`);
   const card = await res.json();
-  if (!card.url || !card.name) throw new DaziError('peer_error', '对方 AgentCard 缺少 url/name');
+  if (!card.url || !card.name) throw new HmuError('peer_error', '对方 AgentCard 缺少 url/name');
   return card;
 }
 
@@ -36,8 +36,8 @@ export async function rpcCall(url, method, params, fetchImpl = fetch) {
     body: JSON.stringify({ jsonrpc: '2.0', id: randomUUID(), method, params }), signal: AbortSignal.timeout(20000),
   });
   let j;
-  try { j = await res.json(); } catch { throw new DaziError('peer_error', `对方返回了无法解析的内容 (HTTP ${res.status})`); }
-  if (j.error) throw new DaziError('peer_error', `对方返回错误: ${j.error.message}`, { rpc: j.error });
+  try { j = await res.json(); } catch { throw new HmuError('peer_error', `对方返回了无法解析的内容 (HTTP ${res.status})`); }
+  if (j.error) throw new HmuError('peer_error', `对方返回错误: ${j.error.message}`, { rpc: j.error });
   return j.result;
 }
 
@@ -68,12 +68,12 @@ export function taskFromRequest(agent, req) {
 
 export function agentCard(agent, baseUrl) {
   const p = agent.profile();
-  const nick = p?.nickname || 'Dazi';
+  const nick = p?.nickname || 'Hit Me Up';
   return {
-    protocolVersion: PROTOCOL_VERSION, name: `${nick} 的搭子 (Dazi)`,
-    description: `${nick}${p?.city ? '（' + p.city + '）' : ''}的个人 AI 搭子：可以了解 TA、打招呼、约见面。${p?.tagline || ''}`.trim(),
+    protocolVersion: PROTOCOL_VERSION, name: `${nick} 的 AI 分身 (Hit Me Up)`,
+    description: `${nick}${p?.city ? '（' + p.city + '）' : ''}的个人 AI 分身：可以了解 TA、打招呼、约见面。${p?.tagline || ''}`.trim(),
     url: `${baseUrl}/a2a`, preferredTransport: 'JSONRPC', version: '0.1.0',
-    provider: { organization: 'Dazi', url: 'https://github.com/Maxthonzx/dazi' },
+    provider: { organization: 'Hit Me Up', url: 'https://github.com/Maxthonzx/hitmeup' },
     capabilities: { streaming: false, pushNotifications: false, stateTransitionHistory: false },
     defaultInputModes: ['application/json', 'text/plain'], defaultOutputModes: ['application/json', 'text/plain'],
     skills: [
@@ -133,7 +133,7 @@ export async function handleRpc(agent, body) {
       default: return err(id, -32602, `未知的消息类型: ${data.type}`);
     }
   } catch (e) {
-    if (e instanceof DaziError) return err(id, e.code === 'not_found' ? -32001 : -32000, e.message, { code: e.code });
+    if (e instanceof HmuError) return err(id, e.code === 'not_found' ? -32001 : -32000, e.message, { code: e.code });
     return err(id, -32603, 'Internal error');
   }
 }

@@ -2,7 +2,7 @@
 import http from 'node:http';
 import { readJson, send, sendHtml, sendError } from './http.mjs';
 import { renderAdmin } from './admin-page.mjs';
-import { DaziError } from './errors.mjs';
+import { HmuError } from './errors.mjs';
 import { notify } from './notify.mjs';
 import { googleAddLink } from './calendar/links.mjs';
 
@@ -32,7 +32,7 @@ export function createAdminServer(agent, { port, log = console.log } = {}) {
     const u = new URL(req.url, 'http://x');
     const p = u.pathname;
     if (req.method === 'GET' && p === '/') return sendHtml(res, renderAdmin());
-    if (req.method !== 'GET' && (req.headers['x-dazi-admin'] !== '1' || (req.headers.origin && !hostOk({ headers: { host: new URL(req.headers.origin).host } })))) {
+    if (req.method !== 'GET' && (req.headers['x-hitmeup-admin'] !== '1' || (req.headers.origin && !hostOk({ headers: { host: new URL(req.headers.origin).host } })))) {
       return send(res, 403, { ok: false, error: '缺少管理头或来源不合法' });
     }
     const J = (b) => send(res, 200, b);
@@ -40,12 +40,12 @@ export function createAdminServer(agent, { port, log = console.log } = {}) {
       if (p === '/api/state') return J({ ok: true, ...(await state()) });
       if (p === '/api/slots') return J({ ok: true, slots: await agent.freeSlots(Number(u.searchParams.get('duration')) || undefined, Number(u.searchParams.get('n')) || 12) });
       let m = p.match(/^\/api\/requests\/([0-9a-f]+)\/slots$/);
-      if (m) { const r = agent.getRequest(m[1]); if (!r) throw new DaziError('not_found', '找不到'); return J({ ok: true, slots: await agent.freeSlots(r.meeting.durationMin, 12) }); }
+      if (m) { const r = agent.getRequest(m[1]); if (!r) throw new HmuError('not_found', '找不到'); return J({ ok: true, slots: await agent.freeSlots(r.meeting.durationMin, 12) }); }
       m = p.match(/^\/api\/requests\/([0-9a-f]+)\.ics$/);
       if (m) {
         const r = agent.getRequest(m[1]);
         if (!r || !r.slot) return send(res, 404, '404');
-        return send(res, 200, agent.icsFor(r), { 'content-type': 'text/calendar; charset=utf-8', 'content-disposition': 'attachment; filename="dazi-meetup.ics"' });
+        return send(res, 200, agent.icsFor(r), { 'content-type': 'text/calendar; charset=utf-8', 'content-disposition': 'attachment; filename="hitmeup-meetup.ics"' });
       }
       if (p === '/api/calendar-check') {
         try { return J({ ok: true, message: await agent.calendar().check() }); } catch (e) { return J({ ok: false, error: e.message }); }
@@ -67,7 +67,7 @@ export function createAdminServer(agent, { port, log = console.log } = {}) {
       agent.saveConfig(cfg);
       return J({ ok: true });
     }
-    if (p === '/api/notify-test') return J({ ok: true, results: await notify(agent.config(), '搭子 Dazi 测试通知', '收到这条说明通知配置成功 ✅', { log }) });
+    if (p === '/api/notify-test') return J({ ok: true, results: await notify(agent.config(), '约我 Hit Me Up 测试通知', '收到这条说明通知配置成功 ✅', { log }) });
     return send(res, 404, { ok: false, error: 'not found' });
   }
 

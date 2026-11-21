@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Dazi CLI：setup / init / doctor / meet / unpublish
+// Hit Me Up CLI：setup / init / doctor / meet / unpublish
 import fs from 'node:fs';
 import readline from 'node:readline/promises';
 import { parseArgs, runtimeOpts } from './opts.mjs';
@@ -50,7 +50,7 @@ async function setup() {
   const cfg = loadConfig(o.dataDir);
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   const ask = async (q, def = '') => { const a = (await rl.question(`${q}${def ? ` [${def}]` : ''}：`)).trim(); return a || def; };
-  console.log('\n🤝 欢迎使用 搭子 Dazi！下面几个问题都可以直接回车跳过（除了 handle 和昵称）。\n');
+  console.log('\n🤝 欢迎使用 约我 Hit Me Up！下面几个问题都可以直接回车跳过（除了 handle 和昵称）。\n');
   let handle = old.handle || '';
   for (;;) {
     handle = (await ask('起个链接里用的名字 handle（3-30 位小写字母/数字/-，如 lily-sh）', handle)).toLowerCase();
@@ -112,10 +112,10 @@ async function meet() {
   let res;
   try {
     res = await fetch(`${base}/api/outbound`, {
-      method: 'POST', headers: { 'content-type': 'application/json', 'x-dazi-admin': '1' },
+      method: 'POST', headers: { 'content-type': 'application/json', 'x-hitmeup-admin': '1' },
       body: JSON.stringify({ target, title: flags.title, durationMin: Number(flags.duration) || undefined, meetupType: flags.type || flags.title, place: flags.place, note: flags.note }),
     });
-  } catch { console.error(`连不上本机的 Dazi（${base}）。请先在另一个终端运行 npm start。`); process.exit(1); }
+  } catch { console.error(`连不上本机的 Hit Me Up（${base}）。请先在另一个终端运行 npm start。`); process.exit(1); }
   const j = await res.json();
   if (!j.ok) { console.error(`❌ ${j.error}`); process.exit(1); }
   const pr = j.profile;

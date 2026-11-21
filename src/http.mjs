@@ -1,5 +1,5 @@
 // 轻量 HTTP 工具：请求体限制、JSON 响应、限流。
-import { DaziError } from './errors.mjs';
+import { HmuError } from './errors.mjs';
 
 export const BODY_LIMIT = 16 * 1024;
 
@@ -8,7 +8,7 @@ export function readBody(req, limit = BODY_LIMIT) {
     let size = 0; const chunks = [];
     req.on('data', (c) => {
       size += c.length;
-      if (size > limit) { reject(new DaziError('too_large', '请求内容太大')); req.destroy(); return; }
+      if (size > limit) { reject(new HmuError('too_large', '请求内容太大')); req.destroy(); return; }
       chunks.push(c);
     });
     req.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
@@ -19,7 +19,7 @@ export function readBody(req, limit = BODY_LIMIT) {
 export async function readJson(req) {
   const text = await readBody(req);
   if (!text) return {};
-  try { return JSON.parse(text); } catch { throw new DaziError('invalid', '请求不是合法的 JSON'); }
+  try { return JSON.parse(text); } catch { throw new HmuError('invalid', '请求不是合法的 JSON'); }
 }
 
 export function send(res, status, body, headers = {}) {
@@ -55,11 +55,11 @@ export function createRateLimiter({ max = 10, windowMs = 3600 * 1000 } = {}) {
 }
 
 export function errorStatus(e) {
-  if (!(e instanceof DaziError)) return 500;
+  if (!(e instanceof HmuError)) return 500;
   return { not_found: 404, too_large: 413, bad_state: 409, slot_taken: 409, no_overlap: 409, too_many_pending: 429, offline: 502, peer_error: 502 }[e.code] || 400;
 }
 export function sendError(res, e) {
   const status = errorStatus(e);
   if (status === 500) console.error('[错误]', e);
-  send(res, status, { ok: false, error: e instanceof DaziError ? e.message : '服务器内部错误', code: e.code || 'internal', ...(e.extra || {}) });
+  send(res, status, { ok: false, error: e instanceof HmuError ? e.message : '服务器内部错误', code: e.code || 'internal', ...(e.extra || {}) });
 }

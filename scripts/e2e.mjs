@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 端到端：两个 Dazi 实例（alice 7788/7790 上海时区，bob 7888/7890 纽约时区），--no-tunnel，目录/通知全部关闭。
+// 端到端：两个 Hit Me Up 实例（alice 7788/7790 上海时区，bob 7888/7890 纽约时区），--no-tunnel，目录/通知全部关闭。
 import { spawn, spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import http from 'node:http';
@@ -29,8 +29,8 @@ function init(x, extra = []) {
 
 function start(x, dir) {
   const env = {
-    ...process.env, DAZI_DATA_DIR: dir, DAZI_PUBLIC_PORT: String(x.pub), DAZI_ADMIN_PORT: String(x.adm),
-    DAZI_PUBLIC_URL: `http://127.0.0.1:${x.pub}`, DAZI_DIRECTORY: 'off', DAZI_POLL_MS: '700',
+    ...process.env, HITMEUP_DATA_DIR: dir, HITMEUP_PUBLIC_PORT: String(x.pub), HITMEUP_ADMIN_PORT: String(x.adm),
+    HITMEUP_PUBLIC_URL: `http://127.0.0.1:${x.pub}`, HITMEUP_DIRECTORY: 'off', HITMEUP_POLL_MS: '700',
   };
   const c = spawn(process.execPath, [MAIN, '--no-tunnel'], { env, stdio: ['ignore', 'pipe', 'pipe'] });
   let out = '';
@@ -43,7 +43,7 @@ function start(x, dir) {
 const pubUrl = (x) => `http://127.0.0.1:${x.pub}`;
 const admUrl = (x) => `http://127.0.0.1:${x.adm}`;
 async function admin(x, p, method = 'GET', body) {
-  const r = await fetch(admUrl(x) + p, { method, headers: { 'content-type': 'application/json', 'x-dazi-admin': '1' }, body: body ? JSON.stringify(body) : undefined });
+  const r = await fetch(admUrl(x) + p, { method, headers: { 'content-type': 'application/json', 'x-hitmeup-admin': '1' }, body: body ? JSON.stringify(body) : undefined });
   return r.json();
 }
 async function pub(x, p, method = 'GET', body) {
@@ -62,7 +62,7 @@ async function waitFor(fn, what, ms = 15000) {
 }
 
 async function main() {
-  console.log('Dazi e2e');
+  console.log('Hit Me Up e2e');
   const da = init(A), db = init(B);
   const ca = start(A, da), cb = start(B, db);
   for (const x of [A, B]) await waitFor(async () => (await pub(x, '/api/ping')).json?.ok, `${x.name} 启动`);

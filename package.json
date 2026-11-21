@@ -1,12 +1,12 @@
 {
-  "name": "dazi",
+  "name": "hitmeup",
   "version": "0.1.0",
-  "description": "搭子 Dazi — 你的 AI 搭子：替你破冰，帮你约见面",
+  "description": "约我 Hit Me Up — 你的 AI 分身：替你破冰，帮你约见面",
   "type": "module",
   "license": "MIT",
   "private": true,
   "engines": { "node": ">=20" },
-  "bin": { "dazi": "src/cli.mjs" },
+  "bin": { "hitmeup": "src/cli.mjs" },
   "scripts": {
     "start": "node src/main.mjs",
     "setup": "node src/cli.mjs setup",

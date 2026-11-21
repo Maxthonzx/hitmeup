@@ -8,7 +8,7 @@ import { handleRpc } from '../src/a2a.mjs';
 import { writeJson, dataPaths, normalizeProfile } from '../src/data.mjs';
 
 function mkAgent(extra = {}) {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'dazi-'));
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'hitmeup-'));
   const p = dataPaths(dir);
   writeJson(p.profile, normalizeProfile({
     handle: 'owner-x', nickname: 'Owner', contacts: { wechat: 'owner_wx', phone: '123' }, contactsToShare: ['wechat'],

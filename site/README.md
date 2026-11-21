@@ -1,7 +1,7 @@
-# 搭子 Dazi — 官网 + 目录服务
+# 约我 Hit Me Up — 官网 + 目录服务
 
-静态官网（`public/`）+ Cloudflare Pages Functions（`functions/`）+ KV（绑定名 `DAZI_DIR`）。
-部署目标：Pages 项目 `dazi-agent` -> https://dazi-agent.pages.dev
+静态官网（`public/`）+ Cloudflare Pages Functions（`functions/`）+ KV（绑定名 `HMU_DIR`）。
+部署目标：Pages 项目 `hitmeup-agent` -> https://hitmeup-agent.pages.dev
 
 ```
 public/      静态页面（index.html、explore.html、assets/、_headers、robots.txt、favicon.svg）
@@ -15,9 +15,9 @@ wrangler.toml
 
 ```bash
 cd site
-npx wrangler kv namespace create DAZI_DIR      # 记下输出里的 id
+npx wrangler kv namespace create HMU_DIR      # 记下输出里的 id
 # 把 wrangler.toml 里 [[kv_namespaces]] 的 id = "REPLACE_ME" 改成上面的 id
-npx wrangler pages project create dazi-agent --production-branch main   # 首次
+npx wrangler pages project create hitmeup-agent --production-branch main   # 首次
 npx wrangler pages deploy                       # 读取 wrangler.toml（输出目录 public）
 ```
 
@@ -26,7 +26,7 @@ npx wrangler pages deploy                       # 读取 wrangler.toml（输出�
 ## 本地开发 / 测试
 
 ```bash
-npx wrangler pages dev public --kv DAZI_DIR --binding DEV_ALLOW_HTTP=1 --port 8788
+npx wrangler pages dev public --kv HMU_DIR --binding DEV_ALLOW_HTTP=1 --port 8788
 node test/smoke.mjs http://127.0.0.1:8788
 ```
 
@@ -39,7 +39,7 @@ KV 记录：`h:<handle>` -> `{url, secretHash, listed, card:{nickname,city,tagli
 
 ### POST /api/register
 Body（<= 4KB）：`{handle, url, secret, listed?, card?}`
-- `handle`：`^[a-z0-9][a-z0-9-]{2,29}$`，且不在保留词表（api, u, www, admin, explore, dazi, help, about, login, static ...）
+- `handle`：`^[a-z0-9][a-z0-9-]{2,29}$`，且不在保留词表（api, u, www, admin, explore, hitmeup, help, about, login, static ...）
 - `url`：`https://`，长度 < 300（末尾 `/` 与 query 会被去掉）
 - `secret`：32–128 位十六进制，客户端首次生成并保存，之后用它更新/删除
 - `listed`：是否在 /explore 公开（省略则沿用旧值，新记录默认 false）
@@ -60,8 +60,8 @@ Body：`{handle, secret}` -> `{ok:true}`；404 `not_found`；403 `forbidden`。
 
 ### GET /u/<handle>[/path][?query]
 - 在线：302 -> `<url>/path?query`（例：`/u/alice/llms.txt`）
-- 离线：503 HTML「TA 的搭子暂时不在线」
-- 未知：404 HTML「想要自己的搭子？」
+- 离线：503 HTML「TA 的 AI 分身暂时不在线」
+- 未知：404 HTML「想要自己的 AI 分身？」
 
 ## 目标地址需要提供
-`GET /api/ping` -> 2xx（本地 Dazi agent 已有此约定）。
+`GET /api/ping` -> 2xx（本地 Hit Me Up agent 已有此约定）。

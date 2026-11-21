@@ -3,16 +3,16 @@ import { json, CORS, isOnline } from '../../lib/util.js';
 export const onRequestOptions = () => new Response(null, { status: 204, headers: CORS });
 
 export async function onRequestGet({ request, env, waitUntil }) {
-  if (!env.DAZI_DIR) return json({ ok: false, error: 'kv_not_bound' }, 500);
+  if (!env.HMU_DIR) return json({ ok: false, error: 'kv_not_bound' }, 500);
   const cache = caches.default;
   const cacheKey = new Request(new URL('/api/explore', request.url).toString());
   const fresh = new URL(request.url).searchParams.has('fresh');
   const hit = fresh ? null : await cache.match(cacheKey);
   if (hit) return hit;
 
-  const list = await env.DAZI_DIR.list({ prefix: 'h:', limit: 100 });
+  const list = await env.HMU_DIR.list({ prefix: 'h:', limit: 100 });
   const recs = (await Promise.all(list.keys.map(async (k) => {
-    const r = await env.DAZI_DIR.get(k.name, 'json');
+    const r = await env.HMU_DIR.get(k.name, 'json');
     return r && r.listed ? { handle: k.name.slice(2), r } : null;
   }))).filter(Boolean);
 

@@ -1,6 +1,6 @@
-# AGENTS.md — 给 AI 助手：替用户安装 搭子 Dazi
+# AGENTS.md — 给 AI 助手：替用户安装 约我 Hit Me Up
 
-你（Claude Code / Codex / Cursor 等）正在帮用户安装 **搭子 Dazi**：运行在用户自己电脑上的个人 AI 搭子。它有一张公开的资料卡 + A2A 接口，别人（或别人的 AI）可以了解用户、打招呼、请求见面；用户在本机后台确认后写入日历。
+你（Claude Code / Codex / Cursor 等）正在帮用户安装 **约我 Hit Me Up**：运行在用户自己电脑上的个人 AI 分身。它有一张公开的资料卡 + A2A 接口，别人（或别人的 AI）可以了解用户、打招呼、请求见面；用户在本机后台确认后写入日历。
 
 请用**简体中文**、口语化、一次问一两个问题地和用户交流。所有问题都可以跳过，别把它变成审问。
 
@@ -61,26 +61,26 @@
 
 ### 7. 自检并启动
 1. `npm run doctor`，按 ❌ 的提示逐项修复。
-2. `npm start`。终端会打印 **分享链接**（`https://dazi-agent.pages.dev/u/<handle>`）和 **后台地址**（`http://127.0.0.1:7790`）。把这两个都告诉用户，并说明：电脑开机且联网时别人才能访问；新请求会出现在后台（和 Bark 推送）。
-3. 如果端口冲突，用环境变量 `DAZI_PUBLIC_PORT` / `DAZI_ADMIN_PORT`，数据目录用 `DAZI_DATA_DIR`。
+2. `npm start`。终端会打印 **分享链接**（`https://hitmeup-agent.pages.dev/u/<handle>`）和 **后台地址**（`http://127.0.0.1:7790`）。把这两个都告诉用户，并说明：电脑开机且联网时别人才能访问；新请求会出现在后台（和 Bark 推送）。
+3. 如果端口冲突，用环境变量 `HITMEUP_PUBLIC_PORT` / `HITMEUP_ADMIN_PORT`，数据目录用 `HITMEUP_DATA_DIR`。
 
 ### 8. 常驻运行（可选）
 - 最简单：保持终端窗口开着。
-- **macOS launchd**：创建 `~/Library/LaunchAgents/dev.dazi.agent.plist`（把路径换成真实路径，`which node` 得到 node 路径）：
+- **macOS launchd**：创建 `~/Library/LaunchAgents/dev.hitmeup.agent.plist`（把路径换成真实路径，`which node` 得到 node 路径）：
   ```xml
   <?xml version="1.0" encoding="UTF-8"?>
   <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
   <plist version="1.0"><dict>
-    <key>Label</key><string>dev.dazi.agent</string>
-    <key>WorkingDirectory</key><string>/Users/YOU/dazi</string>
+    <key>Label</key><string>dev.hitmeup.agent</string>
+    <key>WorkingDirectory</key><string>/Users/YOU/hitmeup</string>
     <key>ProgramArguments</key><array><string>/opt/homebrew/bin/node</string><string>src/main.mjs</string></array>
     <key>EnvironmentVariables</key><dict><key>PATH</key><string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string></dict>
     <key>RunAtLoad</key><true/><key>KeepAlive</key><true/>
-    <key>StandardOutPath</key><string>/tmp/dazi.log</string><key>StandardErrorPath</key><string>/tmp/dazi.log</string>
+    <key>StandardOutPath</key><string>/tmp/hitmeup.log</string><key>StandardErrorPath</key><string>/tmp/hitmeup.log</string>
   </dict></plist>
   ```
-  然后 `launchctl load ~/Library/LaunchAgents/dev.dazi.agent.plist`；分享链接看 `/tmp/dazi.log`。
-- **Windows 任务计划程序**：`schtasks /Create /TN "Dazi" /SC ONLOGON /TR "cmd /c cd /d C:\路径\dazi && npm start" /RL LIMITED`。
+  然后 `launchctl load ~/Library/LaunchAgents/dev.hitmeup.agent.plist`；分享链接看 `/tmp/hitmeup.log`。
+- **Windows 任务计划程序**：`schtasks /Create /TN "Hit Me Up" /SC ONLOGON /TR "cmd /c cd /d C:\路径\hitmeup && npm start" /RL LIMITED`。
 
 ### 9. 收尾
 告诉用户：分享链接、后台地址、如何改资料（后台“资料”页或 `data/profile.json`）、如何主动约别人（`npm run meet -- <handle|链接> --title "喝咖啡" --duration 60`，需先 `npm start`）、如何下线（Ctrl+C；彻底撤销目录登记 `npm run unpublish`）。

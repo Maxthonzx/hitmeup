@@ -13,7 +13,7 @@ export async function notify(cfg, title, body, { log = console.log, fetchImpl = 
   if (n.webhook?.url) {
     const payload = n.webhook.kind === 'feishu'
       ? { msg_type: 'text', content: { text: `${title}\n${body || ''}` } }
-      : { title, body, source: 'dazi', ts: new Date().toISOString() };
+      : { title, body, source: 'hitmeup', ts: new Date().toISOString() };
     tasks.push(fetchImpl(n.webhook.url, {
       method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload), signal: AbortSignal.timeout(8000),
     }).then((r) => { results.webhook = r.ok ? 'ok' : `HTTP ${r.status}`; })

@@ -1,7 +1,7 @@
-name = "dazi-agent"
+name = "hitmeup-agent"
 pages_build_output_dir = "public"
 compatibility_date = "2025-01-01"
 
 [[kv_namespaces]]
-binding = "DAZI_DIR"
+binding = "HMU_DIR"
 id = "e9c5a4b936354170968556714fea07a3"

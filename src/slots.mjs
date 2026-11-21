@@ -18,7 +18,7 @@ export const stripSlot = (s) => ({ start: s.start, end: s.end });
  * @param {object} o
  * @param {object} o.availability  见 DEFAULT_AVAILABILITY
  * @param {Array}  o.busy          [{start,end}]（ISO/毫秒）
- * @param {Array}  [o.meetups]     已确认的搭子见面 [{start,end}]（用于每日上限）
+ * @param {Array}  [o.meetups]     已确认的约我 · 见面 [{start,end}]（用于每日上限）
  * @param {number} o.durationMin
  * @param {string} o.tz
  * @param {number} o.nowMs

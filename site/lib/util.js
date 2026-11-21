@@ -1,6 +1,6 @@
-// Shared helpers for the Dazi directory service.
+// Shared helpers for the Hit Me Up directory service.
 export const RESERVED = new Set([
-  'api', 'u', 'www', 'admin', 'explore', 'dazi', 'help', 'about', 'login', 'logout', 'static', 'assets',
+  'api', 'u', 'www', 'admin', 'explore', 'hitmeup', 'help', 'about', 'login', 'logout', 'static', 'assets',
   'app', 'root', 'support', 'register', 'unregister', 'resolve', 'index', 'home', 'offline', 'status',
   'docs', 'blog', 'mail', 'ftp', 'test', 'null', 'undefined', 'favicon', 'robots', 'github', 'official',
 ]);
@@ -82,14 +82,14 @@ export async function isOnline(url, timeoutMs = 3000) {
   const ctl = new AbortController();
   const t = setTimeout(() => ctl.abort(), timeoutMs);
   try {
-    const r = await fetch(url + '/api/ping', { signal: ctl.signal, redirect: 'manual', headers: { 'user-agent': 'dazi-directory/1' } });
+    const r = await fetch(url + '/api/ping', { signal: ctl.signal, redirect: 'manual', headers: { 'user-agent': 'hitmeup-directory/1' } });
     return r.status >= 200 && r.status < 300;
   } catch { return false; } finally { clearTimeout(t); }
 }
 
 export async function getRecord(env, handle) {
-  if (!env.DAZI_DIR) return null;
-  return env.DAZI_DIR.get('h:' + handle, 'json');
+  if (!env.HMU_DIR) return null;
+  return env.HMU_DIR.get('h:' + handle, 'json');
 }
 
 export const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -102,6 +102,6 @@ a.s{display:block;margin-top:12px;color:#e0484d;text-decoration:none;font-size:1
 @media(prefers-color-scheme:dark){body{background:#1a1316;color:#f5eaee}.c{background:#251a1f;box-shadow:none}p{color:#b9a5ad}a.s{color:#ff8a8e}}`;
 
 export function page(status, emoji, title, bodyHtml) {
-  const html = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${esc(title)} · 搭子 Dazi</title><link rel="icon" href="/favicon.svg"><style>${PAGE_CSS}</style></head><body><main class="c"><div class="e">${emoji}</div><h1>${esc(title)}</h1>${bodyHtml}</main></body></html>`;
+  const html = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>${esc(title)} · 约我 Hit Me Up</title><link rel="icon" href="/favicon.svg"><style>${PAGE_CSS}</style></head><body><main class="c"><div class="e">${emoji}</div><h1>${esc(title)}</h1>${bodyHtml}</main></body></html>`;
   return new Response(html, { status, headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store', 'x-robots-tag': 'noindex' } });
 }

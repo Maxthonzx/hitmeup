@@ -57,8 +57,8 @@ export function renderCard(p, { tz } = {}) {
   const places = (p.favoritePlaces || []).map((x) => `<div class="place"><span>${PLACE_ICON[x.type] || '📍'}</span><div><b>${esc(x.name)}</b>${x.area ? ` <small>${esc(x.area)}</small>` : ''}${x.note ? `<br><small>${esc(x.note)}</small>` : ''}</div></div>`).join('');
   const client = { handle: p.handle, nickname: p.nickname, meetupTypes: p.meetupTypes || [], places: (p.favoritePlaces || []).map((x) => x.name), tz: tz || '' };
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>${esc(p.nickname)} · 搭子 Dazi</title><meta name="robots" content="noindex">
-<meta property="og:title" content="${esc(p.nickname)}｜搭子 Dazi"><meta property="og:description" content="${esc(p.tagline || '想认识你，约个见面吧')}">
+<title>${esc(p.nickname)} · 约我 Hit Me Up</title><meta name="robots" content="noindex">
+<meta property="og:title" content="${esc(p.nickname)}｜约我 Hit Me Up"><meta property="og:description" content="${esc(p.tagline || '想认识你，约个见面吧')}">
 <style>${CSS}</style></head><body><div class="wrap">
 <div class="hero"><span class="online">在线</span><div class="av">${av}</div><h1>${esc(p.nickname)}</h1>
 <div class="sub">${meta}</div>${p.tagline ? `<div class="tag">${esc(p.tagline)}</div>` : ''}</div>
@@ -71,7 +71,7 @@ ${section('喜欢约在', places)}
 ${section('可以这样见', chips(p.meetupTypes))}
 ${(p.languages || []).length ? section('语言', chips(p.languages)) : ''}
 </div>
-<div class="foot">这是 ${esc(p.nickname)} 的个人 AI 搭子 · 你看不到 TA 的日历，只会看到 TA 愿意给的时间<br>你的 AI 也可以直接对接：<a href="/llms.txt">/llms.txt</a> · <a href="https://github.com/Maxthonzx/dazi">Dazi（开源）</a></div>
+<div class="foot">这是 ${esc(p.nickname)} 的个人 AI 分身 · 你看不到 TA 的日历，只会看到 TA 愿意给的时间<br>你的 AI 也可以直接对接：<a href="/llms.txt">/llms.txt</a> · <a href="https://github.com/Maxthonzx/hitmeup">Hit Me Up（开源）</a></div>
 </div>
 <div class="cta"><button class="b1" id="hiBtn">👋 打个招呼</button><button class="b2" id="meetBtn">☕ 约 TA 见面</button></div>
 
@@ -135,7 +135,7 @@ $('#meetForm').onsubmit=async e=>{e.preventDefault();const m=$('#meetMsg');m.cla
 export function renderStatusPage(id, p) {
   const name = p?.nickname || 'TA';
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>见面请求状态 · 搭子 Dazi</title><meta name="robots" content="noindex"><style>${CSS}body{padding:20px 0}.card{margin:14px}</style></head><body><div class="wrap">
+<title>见面请求状态 · 约我 Hit Me Up</title><meta name="robots" content="noindex"><style>${CSS}body{padding:20px 0}.card{margin:14px}</style></head><body><div class="wrap">
 <div class="card" id="app">加载中…</div>
 <div class="foot">此页面链接是你的专属凭证，请勿分享 · <a href="/">回到 ${esc(name)} 的主页</a></div></div>
 <script>

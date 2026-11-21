@@ -4,10 +4,10 @@ import { readJson, send, sendHtml, sendError, clientIp, createRateLimiter } from
 import { handleRpc, agentCard } from './a2a.mjs';
 import { renderCard, renderStatusPage } from './page.mjs';
 import { publicProfile } from './data.mjs';
-import { DaziError } from './errors.mjs';
+import { HmuError } from './errors.mjs';
 
 export function llmsTxt(base, p) {
-  return `# 搭子 Dazi — ${p?.nickname || ''} 的个人 AI 搭子
+  return `# 约我 Hit Me Up — ${p?.nickname || ''} 的个人 AI 分身
 
 这是一个真人的个人 Agent。你（访客的 AI）可以：了解 TA（破冰）、打招呼、替你的用户约见面。
 你永远看不到 TA 的日历，只能看到 TA 愿意提供的空闲时间；TA 本人确认后才会成交。
@@ -32,11 +32,11 @@ export function llmsTxt(base, p) {
 - POST ${base}/a2a  method=tasks/get params={"id":"<taskId>"} 轮询；completed 的 artifact 含 {slot, place, contacts}
 
 ## 礼仪
-请真实地代表你的用户；不要刷请求（限流：每 IP 每小时 10 次写入）。完整文档：https://github.com/Maxthonzx/dazi/blob/main/docs/protocol.md
+请真实地代表你的用户；不要刷请求（限流：每 IP 每小时 10 次写入）。完整文档：https://github.com/Maxthonzx/hitmeup/blob/main/docs/protocol.md
 `;
 }
 
-export function createPublicServer(agent, { rateMax = Number(process.env.DAZI_RATE_LIMIT) || 10, log = console.log } = {}) {
+export function createPublicServer(agent, { rateMax = Number(process.env.HITMEUP_RATE_LIMIT) || 10, log = console.log } = {}) {
   const limiter = createRateLimiter({ max: rateMax });
   const guard = (req, res) => {
     if (limiter.take(clientIp(req))) return true;
@@ -58,7 +58,7 @@ export function createPublicServer(agent, { rateMax = Number(process.env.DAZI_RA
         if (!prof) return send(res, 503, '主人还没有创建资料');
         return sendHtml(res, renderCard(prof, { tz: agent.tz() }));
       }
-      if (p === '/api/ping') return J(200, { ok: true, app: 'dazi', handle: agent.profile()?.handle || null, ts: Date.now() });
+      if (p === '/api/ping') return J(200, { ok: true, app: 'hitmeup', handle: agent.profile()?.handle || null, ts: Date.now() });
       if (p === '/api/profile') { const pr = agent.profile(); return pr ? J(200, { ok: true, profile: publicProfile(pr), timezone: agent.tz() }) : J(503, { ok: false, error: '尚无资料' }); }
       if (p === '/api/slots') {
         const dur = Number(u.searchParams.get('duration')) || undefined;
@@ -77,7 +77,7 @@ export function createPublicServer(agent, { rateMax = Number(process.env.DAZI_RA
         if (m[2]) {
           const r = agent.getRequest(m[1]);
           if (!r || r.direction !== 'in' || r.token !== u.searchParams.get('t') || r.status !== 'accepted') return send(res, 404, '404');
-          return send(res, 200, agent.icsFor(r), { 'content-type': 'text/calendar; charset=utf-8', 'content-disposition': 'attachment; filename="dazi-meetup.ics"' });
+          return send(res, 200, agent.icsFor(r), { 'content-type': 'text/calendar; charset=utf-8', 'content-disposition': 'attachment; filename="hitmeup-meetup.ics"' });
         }
         return sendHtml(res, renderStatusPage(m[1], agent.profile()));
       }
@@ -118,7 +118,7 @@ export function createPublicServer(agent, { rateMax = Number(process.env.DAZI_RA
   }
 
   const server = http.createServer((req, res) => {
-    handle(req, res).catch((e) => { if (!res.headersSent) sendError(res, e instanceof DaziError ? e : e); else res.end(); });
+    handle(req, res).catch((e) => { if (!res.headersSent) sendError(res, e instanceof HmuError ? e : e); else res.end(); });
   });
   server.requestTimeout = 30000;
   return server;

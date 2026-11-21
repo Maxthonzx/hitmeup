@@ -2,7 +2,7 @@
 
 所有适配器：`listBusy(startISO, endISO) -> [{start,end}]`；`createEvent({start,end,summary,description,location}) -> {written, ref?, addLinks?}`；`check()`。
 
-忙闲读取失败时 Dazi 只记录日志，退化为仅按每周可约时间 + 已确认见面提供时段。
+忙闲读取失败时 Hit Me Up 只记录日志，退化为仅按每周可约时间 + 已确认见面提供时段。
 
 ## none
 不读不写。成交后后台给出“添加到 Google 日历”链接和 `.ics` 下载。

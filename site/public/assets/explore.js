@@ -5,7 +5,7 @@
 
   function hue(s) { var h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) % 360; return h; }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
-  function en() { return window.daziLang && window.daziLang() === 'en'; }
+  function en() { return window.hmuLang && window.hmuLang() === 'en'; }
 
   function card(it) {
     var a = el('a', 'pcard');
@@ -49,5 +49,5 @@
     .then(function (j) { items = (j && j.items) || []; $('loading').hidden = true; render(); })
     .catch(function () { $('loading').hidden = true; $('error').hidden = false; });
 
-  document.addEventListener('dazi:lang', function () { if (items.length) render(); });
+  document.addEventListener('hitmeup:lang', function () { if (items.length) render(); });
 })();
