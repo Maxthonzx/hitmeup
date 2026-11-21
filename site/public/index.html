@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>搭子 Dazi — 你的 AI 搭子：替你破冰，帮你约见面</title>
+<meta name="description" content="搭子 Dazi 是跑在你自己电脑上的开源 AI 社交分身：替你破冰、帮你约见面。日程不出本机，联系方式接受后才分享。MIT 开源。">
+<meta name="theme-color" content="#ff5a5f">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://dazi-agent.pages.dev/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="搭子 Dazi">
+<meta property="og:title" content="搭子 Dazi — 你的 AI 搭子：替你破冰，帮你约见面">
+<meta property="og:description" content="跑在你自己电脑上的 AI 社交分身。名片、约见面、日历、A2A 自动沟通，数据都在你自己手里。">
+<meta property="og:url" content="https://dazi-agent.pages.dev/">
+<meta property="og:image" content="https://dazi-agent.pages.dev/favicon.svg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="搭子 Dazi — Your AI wingman">
+<meta name="twitter:description" content="Your AI wingman that breaks the ice and books the meetup. Open source, runs on your own computer.">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<nav class="top"><div class="wrap">
+  <a class="brand" href="/"><img src="/favicon.svg" alt="" width="28" height="28">搭子 Dazi</a>
+  <span class="spacer"></span>
+  <a class="l hide-sm" href="#features" data-i18n="nav_features">功能</a>
+  <a class="l hide-sm" href="#install" data-i18n="nav_install">安装</a>
+  <a class="l" href="/explore.html" data-i18n="nav_explore">看看谁在线</a>
+  <a class="l hide-sm" href="https://github.com/Maxthonzx/dazi" rel="noopener">GitHub</a>
+  <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div>
+    <span class="pill" data-i18n="pill">开源 · 跑在你自己的电脑上</span>
+    <h1><span class="grad" data-i18n="h1a">你的 AI 搭子</span><br><span data-i18n="h1b">替你破冰，帮你约见面</span></h1>
+    <p class="lead" data-i18n="lead">填一张轻松的破冰名片，剩下的交给搭子：别人只能看到你空着的时间，选个时间就能约你；对方的 AI 也能直接和你的搭子沟通。你点「接受」，自动写进日历。</p>
+    <div class="cta">
+      <a class="btn primary" href="#prompt-section" data-i18n="cta_start">开始使用</a>
+      <a class="btn ghost" href="https://github.com/Maxthonzx/dazi" rel="noopener">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.05-.49.05-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.96 0-.87.31-1.59.83-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.08-1.88 3.76-3.66 3.96.29.25.54.74.54 1.49v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0z"/></svg>
+        <span data-i18n="cta_star">GitHub · 给个 Star ⭐</span>
+      </a>
+    </div>
+    <p class="hint" data-i18n="hint">免费 · MIT 开源 · 数据只存在你自己的电脑上</p>
+  </div>
+
+  <div class="phone" aria-hidden="true">
+    <div class="mock">
+      <div class="top">
+        <div class="av">🦊<span class="dot"></span></div>
+        <div><b>小狐狸</b><small>深圳 · 在线</small></div>
+      </div>
+      <div class="tl">周末想找人一起探店，顺便聊聊最近在读的书 ☕</div>
+      <div class="tags"><span class="tag">咖啡</span><span class="tag">City Walk</span><span class="tag">独立音乐</span><span class="tag">摄影</span></div>
+      <div class="row">喜欢约：咖啡店 / 小馆子<br>联系方式：接受约见后才会给你 🔒</div>
+      <div class="slots">
+        <div class="slot busy">周六 10:00</div><div class="slot free">周六 14:00</div><div class="slot free">周六 16:30</div>
+        <div class="slot free">周日 11:00</div><div class="slot busy">周日 15:00</div><div class="slot free">周日 18:00</div>
+      </div>
+    </div>
+    <div class="bubble"><i>搭子</i>：对方的搭子刚来问过，周六 14:00 我这边有空，已替你预留 ✨</div>
+  </div>
+</div></header>
+
+<section id="features"><div class="wrap">
+  <h2 data-i18n="f_title">它能做什么</h2>
+  <p class="sub" data-i18n="f_sub">从交友开始，轻松、没压力、门槛低，像 Tinder / 她说 那种轻松感。</p>
+  <div class="grid g3">
+    <div class="card"><div class="ic">💌</div><h3 data-i18n="f1h">破冰名片</h3><p data-i18n="f1p">爱好、最近感兴趣的东西、想认识什么样的人、能提供什么、喜欢约的地方……全部可选，想填多少填多少。联系方式只在你接受约见后才给对方。</p></div>
+    <div class="card"><div class="ic">📅</div><h3 data-i18n="f2h">约见面</h3><p data-i18n="f2p">别人看不到你的日程，只看到你空的时间。可以在网页上直接选时间约你；你点「接受」，自动写进你的日历。</p></div>
+    <div class="card"><div class="ic">🤝</div><h3 data-i18n="f3h">搭子之间自动沟通</h3><p data-i18n="f3p">对方也有搭子或 AI？通过 A2A 协议，两边的搭子自己协商时间地点，你只需要最后点个头。</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2 data-i18n="s_title">3 步上手</h2>
+  <p class="sub" data-i18n="s_sub">不用懂技术，把一段话丢给你的 AI 就行。</p>
+  <div class="steps">
+    <div class="card step"><h3 data-i18n="s1h">复制提示词</h3><p data-i18n="s1p">在下方一键复制安装提示词。</p></div>
+    <div class="card step"><h3 data-i18n="s2h">发给你的 AI</h3><p data-i18n="s2p">粘贴给 Claude Code / Codex / Cursor 等能执行命令的 AI，它会帮你装好、问你几个问题、填好名片。</p></div>
+    <div class="card step"><h3 data-i18n="s3h">分享你的链接</h3><p data-i18n="s3p">拿到 <code class="i">dazi-agent.pages.dev/u/你的名字</code>，发给想认识的人。</p></div>
+  </div>
+</div></section>
+
+<section id="prompt-section"><div class="wrap">
+  <h2 data-i18n="p_title">复制给你的 AI</h2>
+  <p class="sub" data-i18n="p_sub">一键复制，粘贴给任何能执行命令的 AI agent，它会替你完成安装。</p>
+  <div class="codebox" id="install">
+    <div class="bar"><span data-i18n="p_bar">安装提示词</span><button class="copy" id="copy" type="button" data-copy="#prompt" data-i18n="copy">复制提示词</button></div>
+<pre id="prompt">请帮我安装并启动开源项目「搭子 Dazi」（一个跑在我自己电脑上的 AI 社交分身）。
+1. 把 https://github.com/Maxthonzx/dazi 克隆（git clone）到一个合适的目录；需要 Node.js 20+，没有的话先帮我装。
+2. 阅读仓库根目录的 AGENTS.md，并严格按里面的步骤执行。
+3. 用聊天的方式问我名片信息（昵称、爱好、最近感兴趣的东西、想认识什么样的人、能提供什么、喜欢约的地方、联系方式），全部可选，我说跳过就跳过。
+4. 帮我连接日历：Google 日历（私密 iCal 地址）/ iPhone·iCloud 日历（App 专用密码）/ 跳过，一步步引导我。
+5. 安装 cloudflared（macOS: brew install cloudflared；Windows: winget install Cloudflare.cloudflared），然后运行 npm install、npm run setup、npm start。
+6. 最后运行 npm run doctor 确认一切正常，并把「我的分享链接」和「管理后台地址」告诉我。
+注意：不要把 data/ 目录提交到 git；不要在聊天里回显我的密码或密钥；做任何会改动系统的步骤前先告诉我。</pre>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" data-tab="cc">Claude Code</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="cx">Codex</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="cu">Cursor</button>
+    <button class="tab" role="tab" aria-selected="false" data-tab="ot" data-i18n="tab_other">其他 AI</button>
+  </div>
+  <div class="card">
+    <div class="panel on" id="tab-cc"><ol data-i18n="tab_cc">
+      <li>打开终端，进入你想放项目的文件夹（比如 <code class="i">~/projects</code>）。</li>
+      <li>运行 <code class="i">claude</code> 启动 Claude Code。</li>
+      <li>粘贴上面的提示词，回车。遇到需要你确认的命令，看一眼再点同意。</li>
+    </ol></div>
+    <div class="panel" id="tab-cx"><ol data-i18n="tab_cx">
+      <li>打开终端，进入想放项目的文件夹。</li>
+      <li>运行 <code class="i">codex</code> 启动 Codex CLI（或打开 Codex 桌面版并选好工作目录）。</li>
+      <li>粘贴提示词，回车，按提示确认命令。</li>
+    </ol></div>
+    <div class="panel" id="tab-cu"><ol data-i18n="tab_cu">
+      <li>用 Cursor 打开一个空文件夹（File → Open Folder）。</li>
+      <li>打开 Agent / Composer 面板（<code class="i">Ctrl/Cmd + I</code>），选择能运行终端命令的 Agent 模式。</li>
+      <li>粘贴提示词发送，允许它在终端里执行命令。</li>
+    </ol></div>
+    <div class="panel" id="tab-ot"><ol data-i18n="tab_ot">
+      <li>任何能在你电脑上执行命令的 AI 都可以（如 Windsurf、Cline、Gemini CLI 等）。</li>
+      <li>先让它在一个空文件夹里工作，再粘贴提示词。</li>
+      <li>如果你的 AI 不能执行命令，请用下面的「手动安装」。</li>
+    </ol></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2 data-i18n="m_title">手动安装</h2>
+  <p class="sub" data-i18n="m_sub">需要 Node.js 20+ 和 cloudflared。</p>
+  <pre class="cmd">git clone https://github.com/Maxthonzx/dazi
+cd dazi
+npm install
+npm run setup   # 问几个问题，填名片、连日历
+npm start       # 启动，打印你的分享链接</pre>
+  <p class="sub"><span data-i18n="m_cf">安装 cloudflared：</span><code class="i">brew install cloudflared</code>（macOS）&nbsp;<code class="i">winget install Cloudflare.cloudflared</code>（Windows）</p>
+  <div class="grid g2">
+    <div class="card"><h3 data-i18n="cmd_h">常用命令</h3>
+<p><code class="i">npm run doctor</code> <span data-i18n="cmd1">自检环境</span><br><code class="i">npm run meet -- &lt;handle&gt; --title "喝咖啡"</code> <span data-i18n="cmd2">让你的搭子去约别人</span><br><code class="i">npm run unpublish</code> <span data-i18n="cmd3">下线并取消公开链接</span></p></div>
+    <div class="card"><h3 data-i18n="adm_h">管理后台</h3><p><code class="i">http://127.0.0.1:7790</code><br><span data-i18n="adm_p">只能在你自己的电脑上打开，用来编辑名片、查看和处理约见请求。</span></p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2 data-i18n="c_title">连接日历</h2>
+  <p class="sub" data-i18n="c_sub">日历是可选的。连上后，搭子才知道你什么时候有空，并能把约见写进去。</p>
+  <details>
+    <summary>Google 日历 <span class="tag" data-i18n="c_g_tag">读取 + 一键添加</span></summary>
+    <ol data-i18n="c_g">
+      <li>打开 Google 日历网页版，点右上角「设置」。</li>
+      <li>左侧选择要共享的日历 →「集成日历」。</li>
+      <li>复制「<b>iCal 格式的私密地址</b>」，交给搭子（粘贴到 <code class="i">npm run setup</code> 里）。</li>
+      <li>约见被接受后，搭子会给你一个「一键添加到 Google 日历」的链接。</li>
+    </ol>
+  </details>
+  <details>
+    <summary>iPhone / iCloud 日历 <span class="tag" data-i18n="c_a_tag">读 + 写</span></summary>
+    <ol data-i18n="c_a">
+      <li>打开 <code class="i">appleid.apple.com</code> 并登录。</li>
+      <li>进入「登录与安全」→「App 专用密码」。</li>
+      <li>生成一个新密码（命名为 Dazi），按提示交给搭子。<b>不要用你的 Apple ID 登录密码。</b></li>
+    </ol>
+  </details>
+  <details>
+    <summary>Outlook <span class="tag" data-i18n="c_o_tag">ICS 读取</span></summary>
+    <ol data-i18n="c_o">
+      <li>Outlook 网页版：设置 → 日历 → 共享日历 → 发布日历。</li>
+      <li>选择「可以查看所有详细信息」，复制 ICS 链接给搭子。</li>
+    </ol>
+  </details>
+  <details>
+    <summary><span data-i18n="c_f">飞书（可选，工作场景）</span></summary>
+    <p data-i18n="c_f_p">如果你在工作中使用飞书日历，搭子也可以对接。按 setup 的提示授权即可，跳过也完全不影响使用。</p>
+  </details>
+</div></section>
+
+<section><div class="wrap">
+  <h2 data-i18n="pr_title">隐私：你的数据，你做主</h2>
+  <p class="sub" data-i18n="pr_sub">搭子跑在你自己的电脑上，不是某个平台的账号。</p>
+  <div class="privacy">
+    <div class="card"><div class="ic">🏠</div><div><h3 data-i18n="pr1h">数据存在本机</h3><p data-i18n="pr1p">名片、约见记录都在你电脑的 data/ 目录里，不上传到任何服务器。</p></div></div>
+    <div class="card"><div class="ic">🙈</div><div><h3 data-i18n="pr2h">日程不出本机</h3><p data-i18n="pr2p">别人只看到「哪些时间空着」，看不到你的日程内容。</p></div></div>
+    <div class="card"><div class="ic">🔒</div><div><h3 data-i18n="pr3h">联系方式后给</h3><p data-i18n="pr3p">微信 / 电话 / 邮箱等，只在你点「接受」之后才发给对方。</p></div></div>
+    <div class="card"><div class="ic">🔌</div><div><h3 data-i18n="pr4h">关机即下线</h3><p data-i18n="pr4p">电脑关机，搭子就下线，对方会看到「暂时不在线」。目录服务只记录你当前的隧道地址（和你选择公开的名片摘要），不存日程。</p></div></div>
+  </div>
+  <p class="sub" data-i18n="pr_how">运行原理：电脑开着并联网时，Dazi 通过 Cloudflare 临时隧道 (cloudflared) 对外提供名片页；本站的目录服务把固定链接 <code class="i">https://dazi-agent.pages.dev/u/&lt;handle&gt;</code> 指向你当前的隧道地址。</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2 data-i18n="q_title">常见问题</h2>
+  <p class="sub"></p>
+  <details><summary data-i18n="q1">电脑关了怎么办？</summary><p data-i18n="q1a">搭子会暂时下线，别人打开你的链接会看到「TA 的搭子暂时不在线」。电脑重新开机并运行 npm start 后恢复。</p></details>
+  <details><summary data-i18n="q2">别人能看到我的日程吗？</summary><p data-i18n="q2a">不能。别人只能看到你空着的时间段，看不到具体事项。日程数据不会离开你的电脑。</p></details>
+  <details><summary data-i18n="q3">要钱吗？</summary><p data-i18n="q3a">不要钱。搭子是 MIT 协议的开源项目，目录服务也是免费的（运行在 Cloudflare 免费额度上）。</p></details>
+  <details><summary data-i18n="q4">对方没有搭子，能约我吗？</summary><p data-i18n="q4a">能。对方直接打开你的分享链接，在网页上选一个你空着的时间就行，不需要安装任何东西。</p></details>
+  <details><summary data-i18n="q5">我的数据在哪？</summary><p data-i18n="q5a">都在你电脑上的项目文件夹里（data/ 目录，已被 .gitignore 忽略）。本站只保存「你的用户名 → 当前隧道地址」这一条记录，以及你选择公开的名片摘要。</p></details>
+  <details><summary data-i18n="q6">想下线怎么办？</summary><p data-i18n="q6a">运行 <code class="i">npm run unpublish</code>，你的公开链接和目录记录会被删除。</p></details>
+</div></section>
+
+<footer><div class="wrap">
+  <span>© 2026 搭子 Dazi · <a href="https://github.com/Maxthonzx/dazi/blob/main/LICENSE" rel="noopener">MIT License</a></span>
+  <span><a href="https://github.com/Maxthonzx/dazi" rel="noopener">GitHub</a> · <a href="/explore.html" data-i18n="nav_explore">看看谁在线</a></span>
+</div></footer>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>

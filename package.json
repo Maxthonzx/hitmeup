@@ -1,0 +1,23 @@
+{
+  "name": "dazi",
+  "version": "0.1.0",
+  "description": "搭子 Dazi — 你的 AI 搭子：替你破冰，帮你约见面",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "engines": { "node": ">=20" },
+  "bin": { "dazi": "src/cli.mjs" },
+  "scripts": {
+    "start": "node src/main.mjs",
+    "setup": "node src/cli.mjs setup",
+    "doctor": "node src/cli.mjs doctor",
+    "meet": "node src/cli.mjs meet",
+    "unpublish": "node src/cli.mjs unpublish",
+    "test": "node --test tests/",
+    "e2e": "node scripts/e2e.mjs"
+  },
+  "dependencies": {
+    "node-ical": "^0.20.1",
+    "tsdav": "^2.1.5"
+  }
+}

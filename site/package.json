@@ -1,0 +1,9 @@
+{
+  "name": "dazi-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler pages dev public --kv DAZI_DIR --binding DEV_ALLOW_HTTP=1",
+    "test": "node test/smoke.mjs http://127.0.0.1:8788"
+  }
+}

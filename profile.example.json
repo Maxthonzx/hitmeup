@@ -1,0 +1,23 @@
+{
+  "handle": "lily-sh",
+  "nickname": "Lily",
+  "avatar": "🦊",
+  "gender": "女",
+  "age": 28,
+  "city": "上海",
+  "tagline": "周末找人一起 citywalk，顺便喝杯好咖啡",
+  "bio": "做产品的，爱折腾小众咖啡馆和展览。社恐但对感兴趣的话题话很多。",
+  "hobbies": ["咖啡", "羽毛球", "看展", "胶片摄影"],
+  "recentInterests": ["飞盘", "手冲", "city walk"],
+  "lookingFor": "好奇心强、能聊天也能安静待着的人，不限行业",
+  "canOffer": "带你逛静安/徐汇的小众咖啡馆；可以聊产品和摄影",
+  "favoritePlaces": [
+    { "name": "Manner Coffee 静安寺店", "type": "cafe", "area": "静安寺", "note": "周末人少，适合第一次见" },
+    { "name": "滨江绿道", "type": "park", "area": "徐汇", "note": "边走边聊" }
+  ],
+  "meetupTypes": ["喝咖啡", "吃饭", "散步", "线上聊"],
+  "contacts": { "wechat": "lily_wx_123", "email": "lily@example.com" },
+  "contactsToShare": ["wechat"],
+  "languages": ["中文", "English"],
+  "listed": false
+}
