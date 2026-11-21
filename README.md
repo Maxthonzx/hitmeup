@@ -1,4 +1,4 @@
-# 约我 Hit Me Up
+# 约我 Hit Me Up 「尚未完成，请勿安装」
 
 > 🚧 **开发中（v0.1 预览版）**：功能和接口可能变动，欢迎试用并在 Issues 里反馈。· *Work in progress — expect changes.*
 
